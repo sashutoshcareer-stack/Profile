@@ -1,0 +1,265 @@
+@import "tailwindcss";
+
+/* ─── Tailwind v4 dark-mode variant ─── */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ─── Design tokens ─── */
+@theme {
+  /* Neutral palette (zinc) */
+  --color-zinc-50: #fafafa;
+  --color-zinc-100: #f4f4f5;
+  --color-zinc-200: #e4e4e7;
+  --color-zinc-300: #d4d4d8;
+  --color-zinc-400: #a1a1aa;
+  --color-zinc-500: #71717a;
+  --color-zinc-600: #52525b;
+  --color-zinc-700: #3f3f46;
+  --color-zinc-800: #27272a;
+  --color-zinc-900: #18181b;
+  --color-zinc-950: #09090b;
+
+  /* Accent gradient: indigo → violet → cyan */
+  --color-indigo-500: #6366f1;
+  --color-violet-500: #8b5cf6;
+  --color-cyan-400: #22d3ee;
+
+  /* Border radius */
+  --radius-card: 1rem;
+  --radius-chip: 0.375rem;
+
+  /* Shadows */
+  --shadow-card: 0 4px 24px 0 rgba(0,0,0,.12);
+  --shadow-card-dark: 0 4px 32px 0 rgba(0,0,0,.4);
+  --shadow-glow: 0 0 0 1px rgba(99,102,241,.35), 0 4px 24px 0 rgba(99,102,241,.15);
+
+  /* Fonts */
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Space Grotesk', 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, 'Cascadia Code', Menlo, monospace;
+}
+
+/* ─── Smooth scroll & reduced-motion ─── */
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ─── Base resets ─── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* ─── Reusable component styles ─── */
+@layer components {
+
+/* Bento card */
+.bento-card {
+  border-radius: var(--radius-card);
+  border: 1px solid theme(--color-zinc-200);
+  background: #ffffff;
+  box-shadow: var(--shadow-card);
+  padding: 1.5rem;
+  transition: box-shadow 0.2s ease, translate 0.2s ease;
+}
+
+.dark .bento-card {
+  border-color: theme(--color-zinc-700);
+  background: theme(--color-zinc-900);
+  box-shadow: var(--shadow-card-dark);
+}
+
+.bento-card:hover {
+  box-shadow: var(--shadow-glow);
+  transform: translateY(-2px);
+}
+
+/* Glass card */
+.glass-card {
+  border-radius: var(--radius-card);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: var(--shadow-card);
+}
+
+.dark .glass-card {
+  border-color: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+/* Accent gradient text utility */
+.gradient-text {
+  background: linear-gradient(
+    135deg,
+    theme(--color-indigo-500) 0%,
+    theme(--color-violet-500) 50%,
+    theme(--color-cyan-400) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Accent gradient background utility */
+.gradient-bg {
+  background: linear-gradient(
+    135deg,
+    theme(--color-indigo-500) 0%,
+    theme(--color-violet-500) 50%,
+    theme(--color-cyan-400) 100%
+  );
+}
+
+/* Skill / tech chip */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.625rem;
+  border-radius: var(--radius-chip);
+  font-size: 0.75rem;
+  font-weight: 500;
+  border: 1px solid theme(--color-zinc-200);
+  background: theme(--color-zinc-100);
+  color: theme(--color-zinc-700);
+}
+
+.dark .chip {
+  border-color: theme(--color-zinc-700);
+  background: theme(--color-zinc-800);
+  color: theme(--color-zinc-300);
+}
+
+/* Secondary pill button */
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  border: 1px solid theme(--color-zinc-300);
+  background: rgba(255, 255, 255, 0.7);
+  color: theme(--color-zinc-800);
+  backdrop-filter: blur(8px);
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+.btn-secondary:hover {
+  background: #ffffff;
+  border-color: theme(--color-zinc-400);
+}
+.btn-secondary:focus-visible {
+  outline: 2px solid theme(--color-indigo-500);
+  outline-offset: 2px;
+}
+.dark .btn-secondary {
+  border-color: theme(--color-zinc-700);
+  background: rgba(24, 24, 27, 0.6);
+  color: theme(--color-zinc-100);
+}
+.dark .btn-secondary:hover {
+  background: theme(--color-zinc-800);
+  border-color: theme(--color-zinc-600);
+}
+
+/* Gradient border (for featured bento cards) */
+.gradient-border {
+  border-color: transparent;
+  background:
+    linear-gradient(#ffffff, #ffffff) padding-box,
+    linear-gradient(135deg, theme(--color-indigo-500), theme(--color-violet-500), theme(--color-cyan-400)) border-box;
+}
+.dark .gradient-border {
+  border-color: transparent;
+  background:
+    linear-gradient(theme(--color-zinc-900), theme(--color-zinc-900)) padding-box,
+    linear-gradient(135deg, rgba(99, 102, 241, 0.7), rgba(139, 92, 246, 0.7), rgba(34, 211, 238, 0.7)) border-box;
+}
+
+}
+
+/* ─── Hero background ─── */
+.hero-grid {
+  background-image:
+    linear-gradient(to right, rgba(24, 24, 27, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(24, 24, 27, 0.06) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 40%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 40%, transparent 100%);
+}
+.dark .hero-grid,
+.hero-grid-dark {
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+}
+
+.hero-orb {
+  background: conic-gradient(
+    from 180deg at 50% 50%,
+    theme(--color-indigo-500),
+    theme(--color-violet-500),
+    theme(--color-cyan-400),
+    theme(--color-indigo-500)
+  );
+  animation: orb-spin 18s linear infinite;
+}
+
+@keyframes orb-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ─── Client marquee ─── */
+.marquee {
+  mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+}
+.marquee-track {
+  animation: marquee 40s linear infinite;
+}
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+@keyframes marquee {
+  to {
+    transform: translateX(calc(-50% - 0.375rem));
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+    flex-wrap: wrap;
+    width: auto;
+  }
+  .marquee {
+    mask-image: none;
+    -webkit-mask-image: none;
+  }
+}
